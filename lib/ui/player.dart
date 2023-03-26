@@ -296,39 +296,8 @@ class AudioAppState extends State<AudioApp> {
                                   }
                                 },
                               ),
-                              ValueListenableBuilder<bool>(
-                                valueListenable: playNextSongAutomatically,
-                                builder: (_, value, __) {
-                                  return IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(
-                                      value
-                                          ? MdiIcons.skipNextCircle
-                                          : MdiIcons.skipNextCircleOutline,
-                                      color: value
-                                          ? accent.primary
-                                          : Theme.of(context).hintColor,
-                                    ),
-                                    iconSize: size.width * 0.056,
-                                    splashColor: Colors.transparent,
-                                    onPressed: changeAutoPlayNextStatus,
-                                  );
-                                },
-                              ),
                             ],
                           ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          icon: Icon(
-                            MdiIcons.shuffle,
-                            color: shuffleNotifier.value
-                                ? accent.primary
-                                : Theme.of(context).hintColor,
-                          ),
-                          iconSize: size.width * 0.056,
-                          onPressed: changeShuffleStatus,
-                          splashColor: Colors.transparent,
-                        ),
                         IconButton(
                           padding: EdgeInsets.zero,
                           icon: Icon(
@@ -426,39 +395,6 @@ class AudioAppState extends State<AudioApp> {
                           onPressed: changeLoopStatus,
                           splashColor: Colors.transparent,
                         ),
-                        if (metadata.extras['ytid'].toString().isNotEmpty)
-                          Column(
-                            children: [
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(
-                                  MdiIcons.download,
-                                  color: Theme.of(context).hintColor,
-                                ),
-                                iconSize: size.width * 0.056,
-                                splashColor: Colors.transparent,
-                                onPressed: () {
-                                  downloadSong(
-                                    context,
-                                    mediaItemToMap(metadata as MediaItem),
-                                  );
-                                },
-                              ),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(
-                                  sponsorBlockSupport.value
-                                      ? MdiIcons.playCircle
-                                      : MdiIcons.playCircleOutline,
-                                  color: Theme.of(context).hintColor,
-                                ),
-                                iconSize: size.width * 0.056,
-                                splashColor: Colors.transparent,
-                                onPressed: () =>
-                                    setState(changeSponsorBlockStatus),
-                              ),
-                            ],
-                          ),
                       ],
                     ),
                   ),
