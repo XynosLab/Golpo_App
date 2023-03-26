@@ -268,33 +268,52 @@ class AudioAppState extends State<AudioApp> {
                         if (metadata.extras['ytid'].toString().isNotEmpty)
                           Column(
                             children: [
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(
-                                  MdiIcons.download,
-                                  color: Theme.of(context).hintColor,
-                                ),
-                                iconSize: size.width * 0.056,
-                                splashColor: Colors.transparent,
-                                onPressed: () {
-                                  downloadSong(
-                                    context,
-                                    mediaItemToMap(metadata as MediaItem),
-                                  );
+                              ValueListenableBuilder<bool>(
+                                valueListenable: songLikeStatus,
+                                builder: (_, value, __) {
+                                  if (value == true) {
+                                    return IconButton(
+                                      color: accent.primary,
+                                      icon: const Icon(MdiIcons.star),
+                                      iconSize: size.width * 0.056,
+                                      splashColor: Colors.transparent,
+                                      onPressed: () => {
+                                        removeUserLikedSong(ytid),
+                                        songLikeStatus.value = false
+                                      },
+                                    );
+                                  } else {
+                                    return IconButton(
+                                      color: Theme.of(context).hintColor,
+                                      icon: const Icon(MdiIcons.starOutline),
+                                      iconSize: size.width * 0.056,
+                                      splashColor: Colors.transparent,
+                                      onPressed: () => {
+                                        addUserLikedSong(ytid),
+                                        songLikeStatus.value = true
+                                      },
+                                    );
+                                  }
                                 },
                               ),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(
-                                  sponsorBlockSupport.value
-                                      ? MdiIcons.playCircle
-                                      : MdiIcons.playCircleOutline,
-                                  color: Theme.of(context).hintColor,
-                                ),
-                                iconSize: size.width * 0.056,
-                                splashColor: Colors.transparent,
-                                onPressed: () =>
-                                    setState(changeSponsorBlockStatus),
+                              ValueListenableBuilder<bool>(
+                                valueListenable: playNextSongAutomatically,
+                                builder: (_, value, __) {
+                                  return IconButton(
+                                    padding: EdgeInsets.zero,
+                                    icon: Icon(
+                                      value
+                                          ? MdiIcons.skipNextCircle
+                                          : MdiIcons.skipNextCircleOutline,
+                                      color: value
+                                          ? accent.primary
+                                          : Theme.of(context).hintColor,
+                                    ),
+                                    iconSize: size.width * 0.056,
+                                    splashColor: Colors.transparent,
+                                    onPressed: changeAutoPlayNextStatus,
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -410,52 +429,33 @@ class AudioAppState extends State<AudioApp> {
                         if (metadata.extras['ytid'].toString().isNotEmpty)
                           Column(
                             children: [
-                              ValueListenableBuilder<bool>(
-                                valueListenable: songLikeStatus,
-                                builder: (_, value, __) {
-                                  if (value == true) {
-                                    return IconButton(
-                                      color: accent.primary,
-                                      icon: const Icon(MdiIcons.star),
-                                      iconSize: size.width * 0.056,
-                                      splashColor: Colors.transparent,
-                                      onPressed: () => {
-                                        removeUserLikedSong(ytid),
-                                        songLikeStatus.value = false
-                                      },
-                                    );
-                                  } else {
-                                    return IconButton(
-                                      color: Theme.of(context).hintColor,
-                                      icon: const Icon(MdiIcons.starOutline),
-                                      iconSize: size.width * 0.056,
-                                      splashColor: Colors.transparent,
-                                      onPressed: () => {
-                                        addUserLikedSong(ytid),
-                                        songLikeStatus.value = true
-                                      },
-                                    );
-                                  }
-                                },
-                              ),
-                              ValueListenableBuilder<bool>(
-                                valueListenable: playNextSongAutomatically,
-                                builder: (_, value, __) {
-                                  return IconButton(
-                                    padding: EdgeInsets.zero,
-                                    icon: Icon(
-                                      value
-                                          ? MdiIcons.skipNextCircle
-                                          : MdiIcons.skipNextCircleOutline,
-                                      color: value
-                                          ? accent.primary
-                                          : Theme.of(context).hintColor,
-                                    ),
-                                    iconSize: size.width * 0.056,
-                                    splashColor: Colors.transparent,
-                                    onPressed: changeAutoPlayNextStatus,
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(
+                                  MdiIcons.download,
+                                  color: Theme.of(context).hintColor,
+                                ),
+                                iconSize: size.width * 0.056,
+                                splashColor: Colors.transparent,
+                                onPressed: () {
+                                  downloadSong(
+                                    context,
+                                    mediaItemToMap(metadata as MediaItem),
                                   );
                                 },
+                              ),
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(
+                                  sponsorBlockSupport.value
+                                      ? MdiIcons.playCircle
+                                      : MdiIcons.playCircleOutline,
+                                  color: Theme.of(context).hintColor,
+                                ),
+                                iconSize: size.width * 0.056,
+                                splashColor: Colors.transparent,
+                                onPressed: () =>
+                                    setState(changeSponsorBlockStatus),
                               ),
                             ],
                           ),

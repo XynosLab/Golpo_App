@@ -589,7 +589,7 @@ class SettingsCards extends StatelessWidget {
           MdiIcons.heart,
           () => {
             launchURL(
-              Uri.parse('https://www.buymeacoffee.com/gokadzev18'),
+              Uri.parse('https://golpobd.com/'),
             ),
           },
         ),

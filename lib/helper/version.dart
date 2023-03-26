@@ -36,7 +36,7 @@ Future<void> downloadAppUpdates() async {
     dlUrl = map['url'].toString();
   }
   final dlPath = await ExtStorageProvider.getExtStorage(dirName: 'Download');
-  final file = File('${dlPath!}/Musify.apk');
+  final file = File('${dlPath!}/Golpo.apk');
   if (await file.exists()) {
     await file.delete();
   }

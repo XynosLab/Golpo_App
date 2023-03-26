@@ -52,7 +52,7 @@ class AboutCards extends StatelessWidget {
                   padding: const EdgeInsets.all(13),
                   child: Center(
                     child: Text(
-                      'Golpo  | $version',
+                      'Golpo  | 1.0.2',
                       style: TextStyle(
                         color: accent.primary,
                         fontSize: 24,
